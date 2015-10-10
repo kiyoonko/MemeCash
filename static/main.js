@@ -11,37 +11,34 @@ function init() {
     Moxtra.init(options);
 }
 
-var client_id = tmep_FWx9w0;
-var client_secret = sMXrcuyUul8;
+var client_id = "tmep_FWx9w0";
+var client_secret = "sMXrcuyUul8";
 
 var user = {
-    id: user_id,
-    first_name: Atsushi,
-    last_name: Yamamoto
+    id: "user_1",
+    first_name: "Atsushi",
+    last_name: "Yamamoto"
 }
 
-function getAccessToken(client_id, client_secret, user) {
+
+
+var timestamp = new Date().getTime();
+
+alert(timestamp);
+
+$(document).ready(function() {
+//function getAccessToken(client_id, client_secret, user) {
     $.ajax({
+        type: "POST",
         url: "https://apisandbox.moxtra.com/oauth/token",
-        method: "POST",
-        data: {
-            client_id: client_id,
-            client_secret: client_secret,
-            grant_type: "http://www.moxtra.com/auth_uniqueid",
-            uniqueid: user.id,
-            timestamp: 1444510889000,
-            firstname: user.first_name,
-            lastname: user.last_name
-        },
-        headers: {
-            Content_type: "Token " + token
-        },
+        data: "client_id="+client_id+"&client_secret="+client_secret+"&grant_type="+"http://www.moxtra.com/auth_uniqueid"+"&uniqueid="+user.id+"&timestamp="+timestamp+"&firstname="+user.first_name+"&lastname="+user.last_name,
         success: function (data) {
-            var result = getResult(data);
-            renderResult(result);
-        }
-    })
-}
+
+            var accesstoken = data.access_token;
+            alert(accesstoken);
+            return accesstoken;
+        }});
+});
 
 var options = {
     binder_id: BINDER_ID,
