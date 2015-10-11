@@ -3,25 +3,40 @@ var client_secret = "sMXrcuyUul8";
 var user1 = {
     id: "user_1",
     first_name: "Atsushi",
-    last_name: "Yamamoto"
+    last_name: "Yamamoto",
+    token: ""
 };
 // Only here to check the chatting functionality
 var user2 = {
     id: "user_2",
-    first_name: "john",
-    last_name: "doe"
+    first_name: "John",
+    last_name: "Doe",
+    token: ""
+};
+var user3 = {
+    id: "user_3",
+    first_name: "Michael",
+    last_name: "Jackson",
+    token: ""
+};
+var user4 = {
+    id: "user_4",
+    first_name: "Bruh",
+    last_name: "WHydidyoulosit",
+    token: ""
 };
 var timestamp = new Date().getTime();
 create_user(user2);
+create_user(user3);
 
 function create_user(user) {
-    alert(timestamp);
     $.ajax({
         type: "POST",
         url: "https://apisandbox.moxtra.com/oauth/token",
         data: "client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=" + "http://www.moxtra.com/auth_uniqueid" + "&uniqueid=" + user.id + "&timestamp=" + timestamp + "&firstname=" + user.first_name + "&lastname=" + user.last_name,
         success: function (data) {
             var accesstoken = data.access_token;
+            user.token = accesstoken;
             console.log("user:" + user.first_name + " " + accesstoken);
         }
     });
@@ -35,7 +50,7 @@ $(document).ready(function () {
         data: "client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=" + "http://www.moxtra.com/auth_uniqueid" + "&uniqueid=" + user1.id + "&timestamp=" + timestamp + "&firstname=" + user1.first_name + "&lastname=" + user1.last_name,
         success: function (data) {
             var accesstoken = data.access_token;
-            alert(accesstoken);
+            user1.token = accesstoken;
             init(accesstoken);
         }
     });
@@ -51,20 +66,48 @@ function init(accesstoken) {
             alert("Access Token expired for session id: " + event.session_id);
         }
     };
-    Moxtra.init(options)
-        //    start_chat(user2);
-    open_timeline();
+    Moxtra.init(options);
+    $.ajax({
+        type: "GET",
+        url: "https://apisandbox.moxtra.com/v1/me/binders?access_token=" + accesstoken,
+        success: function (data) {
+            console.log(data);
+        }
+    })
+    start_list(accesstoken);
 };
 
+function start_list(accesstoken) {
+    var html_output = "";
+    console.log("https://apisandbox.moxtra.com/v1/me/binders?filter=all&access_token=" + accesstoken);
+    $.ajax({
+        type: "GET",
+        url: "https://apisandbox.moxtra.com/v1/me/binders?filter=all&access_token=" + accesstoken,
+        success: function (response) {
+            var obj = response;
+            // console.log (obj.data.binders[0].binder.id);
+            if (obj.data.binders !== 'undefined') {
+                var binders = obj.data.binders;
+                for (i = 0; i < binders.length; i++) {
+                    console.log(binders[i].binder.id);
+                    html_output = html_output + "<p><a href=javascript:open_chat('" + binders[i].binder.id + "')>" + binders[i].binder.name + "</a></p>"
+                        // render_list(binders[i].binder.id,binders[i].binder.name);
+                }
+            }
+            $("#timeline_container").html(html_output);
+        }
+    });
+}
 
 
-function start_chat(user) {
+
+function open_chat(binderid) {
     var chat_options = {
-        unique_id: user.id,
+        binder_id: binderid,
         iframe: true,
         tagid4iframe: "chat_container",
-        iframewidth: "920px",
-        iframeheight: "650px",
+        iframewidth: "400px",
+        iframeheight: "400px",
         autostart_meet: true,
         autostart_note: false,
         start_chat: function (event) {
@@ -88,63 +131,3 @@ function start_chat(user) {
     };
     Moxtra.chat(chat_options);
 }
-
-function open_timeline() {
-    var options = {
-        //    binder_id: binderid.value,
-        iframe: true,
-        tagid4iframe: "timeline_container",
-        iframewidth: "920px",
-        iframeheight: "650px",
-        autostart_meet: true,
-        autostart_note: true,
-        extension: {
-            "show_dialogs": {
-                "meet_invite": true
-            },
-            "menus": [{
-                    "add_page": [
-                        {
-                            "menu_name": "Do MemeCash",
-                            "position": "bottom"
-                        }]
-            }]
-        },
-        start_timeline: function (event) {
-            alert("Timeline started session Id: " + event.session_id + " binder id: " + event.binder_id);
-        },
-        view_binder: function (event) {
-            alert("Binder switched session Id: " + event.session_id + " binder id: " + event.binder_id);
-        },
-        invite_member: function (event) {
-            alert("Invite member into binder Id: " + event.binder_id);
-        },
-        start_meet: function (event) {
-            alert("Meet started session key: " + event.session_key + " session id: " + event.session_id);
-        },
-        end_meet: function (event) {
-            alert("Meet end event");
-        },
-        save_meet: function (event) {
-            alert("Meet saved on binder: " + event.binder_id);
-        },
-        start_note: function (event) {
-            alert("session key: " + event.session_key + " session id: " + event.session_id);
-        },
-        save_note: function (event) {
-            alert("Note saved on binder: " + event.destination_binder_id);
-        },
-        cancel_note: function (event) {
-            alert("Note cancelled");
-        },
-        add_page: function (event) {
-            if (event.action == "Do MemeCash") {
-                alert("Clicked on My CMS for Binder Id: " + event.binder_id);
-            }
-        },
-        error: function (event) {
-            alert("Timeline error code: " + event.error_code + " error message: " + event.error_message);
-        }
-    };
-    Moxtra.timeline(options);
-};
