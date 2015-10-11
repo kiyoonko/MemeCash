@@ -51,8 +51,9 @@ app.post('/user', function (req, res) {
           console.log(body);
           for (var i = body.length - 1; i >= 0; i--) {
             var customer = body[i];
-            if(customer.first_name == first_name && customer.last_name == last_name){
-              console.log(customer._id);
+            console.log(customer);
+            if(customer."first_name" == first_name && customer."last_name" == last_name){
+              console.log(customer."_id");
               break;
             }
           };
