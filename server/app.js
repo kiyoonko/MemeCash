@@ -1,7 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var Promise = require('bluebird');
-var request = Promise.promisify(require('request'));
+var rp = require('request-promise');
 var app = express();
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({
@@ -34,8 +33,8 @@ app.post('/user', function (req, res) {
     json: true,
     url: url
   }
-  request(options).then(function (body){
-      console.log(body);
+  rp(options).then(function (response){
+      console.log(response);
     });
 //       var options = {
 //         method: 'get',
