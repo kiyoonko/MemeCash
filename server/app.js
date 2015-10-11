@@ -15,11 +15,11 @@ app.post('/user', function (req, res) {
   		first_name: req.body.first_name,
   		last_name: req.body.last_name,
   		address: {
-    		street_number: req.body.street_number,
-    		street_name: req.body.street_name,
-    		city: req.body.city,
-    		state: req.body.state,
-    		zip: req.body.zip
+    		street_number: req.body.address.street_number,
+    		street_name: req.body.address.street_name,
+    		city: req.body.address.city,
+    		state: req.body.address.state,
+    		zip: req.body.address.zip
   		}
 	} 
 	res.send(postData);
