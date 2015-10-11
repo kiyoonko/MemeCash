@@ -74,8 +74,8 @@ app.post('/user', function (req, res) {
 
 //     }
 //   })
-//   res.send(postData);
-// });
+   res.send(postData);
+ });
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
