@@ -49,11 +49,11 @@ app.post('/user', function (req, res) {
         }
         else{
           var parsedBody = JSON.parse(body);
-          console.log(parsedBody);
+          console.log("body", parsedBody);
 
-          parsedBody.forEach(function(customer){
-            console.log(customer);
-          })
+          // parsedBody.forEach(function(customer){
+          //   console.log(customer);
+          // })
 
           // for (var i = body.length - 1; i >= 0; i--) {
           //   var customer = body[i];
