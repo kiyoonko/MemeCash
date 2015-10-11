@@ -22,6 +22,23 @@ app.post('/user', function (req, res) {
     		zip: req.body.address.zip
   		}
 	} 
+
+  var url = "http://api.reimaginebanking.com/customers?key=e833c6c363ae8cbcad538f4fb79e6492";
+  var options = {
+    method: 'post',
+    body: postData,
+    json: true,
+    url: url
+  }
+  request(options, function (err, res, body){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log(body);
+    }
+  })
+
 	res.send(postData);
 });
 
