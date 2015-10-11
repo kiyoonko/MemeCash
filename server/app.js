@@ -48,15 +48,21 @@ app.post('/user', function (req, res) {
           console.log(err);
         }
         else{
-          console.log(JSON.parse(body));
-          for (var i = body.length - 1; i >= 0; i--) {
-            var customer = body[i];
+          var parsedBody = JSON.parse(body);
+          console.log(parsedBody);
+
+          parsedBody.forEach(function(customer){
             console.log(customer);
-            if(customer.first_name == first_name && customer.last_name == last_name){
-              console.log(customer._id);
-              break;
-            }
-          };
+          })
+
+          // for (var i = body.length - 1; i >= 0; i--) {
+          //   var customer = body[i];
+          //   console.log(customer);
+          //   if(customer.first_name == first_name && customer.last_name == last_name){
+          //     console.log(customer._id);
+          //     break;
+          //   }
+          // };
         }
       })
 
