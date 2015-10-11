@@ -9,8 +9,12 @@ h1 {
 
 }
 
+body {
+  background-image: url("http://lovelace-media.imgix.net/uploads/25/378bc2a0-4376-0133-9d86-0af7184f89fb.gif?");
+}
+
 .field-wrap {
-  ont-family: 'Open Sans';
+  font-family: 'Open Sans';
 	font-size: 18px;
 	font-style: normal;
 	font-variant: normal;
@@ -22,6 +26,7 @@ h1 {
   float: left;
   padding-right: 50px;
   padding-left: 200px;
+  color: #ffffff;
 
 }
 
@@ -29,5 +34,5 @@ h1 {
   float: middle;
   padding-right: 30px;
   padding-left: 50px;
-
+  color: #ffffff;
 }
