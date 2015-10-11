@@ -55,6 +55,7 @@ app.post('/user', function (req, res) {
             //console.log(customer);
             //console.log(customer.first_name+" vs. "+first_name);
             //console.log(customer.last_name+" vs. "+last_name);
+            console.log("This is real");
             if(customer.first_name == first_name && customer.last_name == last_name){
               console.log(customer);
               console.log(customer._id);
