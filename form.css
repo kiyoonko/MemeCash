@@ -1,0 +1,33 @@
+h1 {
+  font-family: 'Open Sans';
+	font-size: 36px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+  margin:0 0 40px;
+
+}
+
+.field-wrap {
+  ont-family: 'Open Sans';
+	font-size: 18px;
+	font-style: normal;
+	font-variant: normal;
+  padding-bottom: 10px;
+
+}
+
+.signup {
+  float: left;
+  padding-right: 50px;
+  padding-left: 30px;
+  
+}
+
+.login {
+  float: middle;
+  padding-right: 30px;
+  padding-left: 50px;
+
+}

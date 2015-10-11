@@ -1,0 +1,119 @@
+<html>
+<head>
+<link rel="stylesheet" href="form.css"></head>
+<div class="form">
+      <!-- <ul class="tab-group">
+        <li class="tab active"><a href="#signup">Sign Up</a></li>
+        <li class="tab"><a href="#login">Log In</a></li>
+      </ul> -->
+      <img src="gif.gif" width=650px height=250px><br><br>
+      <h1><b><font color="red">CONGRATULATIONS! YOU ARE THE 100 MILLIONTH VISITOR!!</font></b></h1>
+
+  <div class="tab-content" width=1000px>
+        <div class="signup">
+          <h1>MemeCash Sign Up</h1>
+          <form action="/" method="post">
+
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                First Name :<span class="req">*</span>
+              </label>
+              <input name="first_name" type="text" required autocomplete="off" size="10px" />
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Last Name :<span class="req">*</span>
+              </label>
+              <input type="text"required autocomplete="off" name="last_name"/>
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Email Address :<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off" name="email_address"/>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Set A Password :<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off" name="password"/>
+          </div>
+
+          <div class="field-wrap" >
+            <label>
+              Street Number :<span class="req">*</span>
+            </label>
+            <input type="text"required autocomplete="off" name="street_number"/>
+          </div>
+
+          <div class="field-wrap" id="street_name">
+            <label>
+              Street Name :<span class="req">*</span>
+            </label>
+            <input type="text"required autocomplete="off" name="street_name"/>
+          </div>
+
+          <div class="field-wrap" >
+            <label>
+              City :<span class="req">*</span>
+            </label>
+            <input type="text"required autocomplete="off" id="city"/>
+          </div>
+
+          <div class="field-wrap" >
+            <label>
+              State :<span class="req">*</span>
+            </label>
+            <input type="text"required autocomplete="off" name="state"/>
+          </div>
+
+          <div class="field-wrap" >
+            <label>
+              Zipcode :<span class="req">*</span>
+            </label>
+            <input type="text"required autocomplete="off" name="zip"/>
+          </div>
+
+          <button type="submit" class="button button-block"/>Get Started</button>
+
+          </form>
+
+        </div>
+
+        <div class="login">
+          <h1>Welcome Back!</h1>
+
+          <form action="/" method="post">
+
+            <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off" name="login_email"/>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Password<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off" name="login_password"/>
+          </div>
+
+          <p class="forgot"><a href="#">Forgot Password?</a></p>
+
+          <button class="button button-block"/>Log In</button>
+
+          </form>
+
+        </div>
+
+      </div>
+      <pre><!-- tab-content -->        </pre>
+</div>
+<pre><!-- /form --></pre>
+</form></html>
