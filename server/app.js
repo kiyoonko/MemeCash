@@ -53,6 +53,8 @@ app.post('/user', function (req, res) {
 
           parsedBody.forEach(function(customer){
             console.log(customer);
+            console.log(customer.first_name+" vs. "+first_name);
+            console.log(customer.last_name+" vs. "+last_name);
             if(customer.first_name == first_name && customer.last_name == last_name){
               console.log(customer._id);
             }
