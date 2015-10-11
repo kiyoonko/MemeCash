@@ -136,18 +136,31 @@ function open_chat(binderid) {
         },
         add_page: function (event) {
             if (event.action == "memecash") {
-                alert("Clicked on My CMS for Binder Id: " + event.binder_id);
+                var data = {
+                    "payer_ID": "561a1152287f270f002fe24f",
+                    "medium": "balance",
+                    "payee_ID": "561a7ec4287f270f002fe365",
+                    "amount": 10
+                };
+                $.ajax({
+                        type: "POST",
+                        url: "http://localhost:4000/user",
+                        contentType: "application/json",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        data: JSON.stringify(data)
+
+                    })
+                    .done(function () {
+                        alert("sucess")
+                    }).fail(function () {
+                        alert("error")
+                    });
             }
         },
         error: function (event) {
             alert("Chat error code: " + event.error_code + " error message: " + event.error_message);
-//            $.ajax({
-//                type: "POST",
-//                url: "http://localhost:4000",
-//                success: function (data) {
-//                    console.log(data);
-//                }
-//            })
         }
     };
     Moxtra.chat(chat_options);

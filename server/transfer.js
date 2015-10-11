@@ -8,51 +8,55 @@ app.use(bodyParser.json());
 // }))
 
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+    res.send('Hello World!');
 });
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:62899");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Methods", 'POST, GET, PUT, DELETE, OPTIONS');
+    next();
+});
+
 
 app.post('/user', function (req, res) {
-  var payer_ID = req.body.payer_ID;
-  var postData = {
-    medium: req.body.medium,
-    payee_id: req.body.payee_ID,
-    amount: req.body.amount
-  }
-  console.log("payer ID", payer_ID);
-  var url = "http://api.reimaginebanking.com/accounts/"+payer_ID+"/transfers?key=e833c6c363ae8cbcad538f4fb79e6492";
-  var options = {
-    method: 'post',
-    body: postData,
-    json: true,
-    uri: url
-  };
-
-
-  rp(options). then(function(createTransaction){
-    console.log("Create Transaction", createTransaction);
-    var options = {
-      method: 'get',
-      uri: url
+    var payer_ID = req.body.payer_ID;
+    var postData = {
+        medium: req.body.medium,
+        payee_id: req.body.payee_ID,
+        amount: req.body.amount
     }
-    res.status(200).send({
-        payerID: req.body.payer_ID,
-        payeeID: req.body.payee_ID,
-        money: req.body.amount
-      });
-  }).catch(function(err){
-    console.log("error", err);
-  });
+    console.log("payer ID", payer_ID);
+    var url = "http://api.reimaginebanking.com/accounts/" + payer_ID + "/transfers?key=e833c6c363ae8cbcad538f4fb79e6492";
+    var options = {
+        method: 'post',
+        body: postData,
+        json: true,
+        uri: url
+    };
+
+
+    rp(options).then(function (createTransaction) {
+        console.log("Create Transaction", createTransaction);
+        var options = {
+            method: 'get',
+            uri: url
+        }
+        res.status(200).send({
+            payerID: req.body.payer_ID,
+            payeeID: req.body.payee_ID,
+            money: req.body.amount
+        });
+    }).catch(function (err) {
+        console.log("error", err);
+    });
 });
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 var server = app.listen(4000, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+    var host = server.address().address;
+    var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%s', host, port);
+    console.log('Example app listening at http://%s:%s', host, port);
 });
