@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var request = require('request');
+var Promise = require('bluebird');
+var request = Promise.promisify(require('request'));
 var app = express();
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({
@@ -25,7 +26,7 @@ app.post('/user', function (req, res) {
       zip: req.body.address.zip
     }
   } 
-
+  
   var url = "http://api.reimaginebanking.com/customers?key=e833c6c363ae8cbcad538f4fb79e6492";
   var options = {
     method: 'post',
@@ -33,51 +34,48 @@ app.post('/user', function (req, res) {
     json: true,
     url: url
   }
-  request(options, function (err, res, body){
-    if(err){
-      console.log(err);
-    }
-    else{
+  request(options).then(function (body){
       console.log(body);
-      var options = {
-        method: 'get',
-        url: url
-      }
-      request(options, function (err, res, body){
-        if(err){
-          console.log(err);
-        }
-        else{
-          var parsedBody = JSON.parse(body);
-          // console.log("body", parsedBody);
+    });
+//       var options = {
+//         method: 'get',
+//         url: url
+//       }
+//       request(options, function (err, res, body){
+//         if(err){
+//           console.log(err);
+//         }
+//         else{
+//           var parsedBody = JSON.parse(body);
+//           // console.log("body", parsedBody);
 
-          parsedBody.forEach(function(customer){
-            //console.log(customer);
-            //console.log(customer.first_name+" vs. "+first_name);
-            //console.log(customer.last_name+" vs. "+last_name);
-            // console.log("This is real");
-            if(customer.first_name == first_name && customer.last_name == last_name){
-              // console.log(customer);
-              console.log(customer.first_name+" "+customer.last_name);
-              console.log(customer._id);
-            }
-          })
+//           parsedBody.forEach(function(customer){
+//             //console.log(customer);
+//             //console.log(customer.first_name+" vs. "+first_name);
+//             //console.log(customer.last_name+" vs. "+last_name);
+//             // console.log("This is real");
+//             if(customer.first_name == first_name && customer.last_name == last_name){
+//               // console.log(customer);
+//               console.log(customer.first_name+" "+customer.last_name);
+//               console.log(customer._id);
+//             }
+//           })
 
-          // for (var i = body.length - 1; i >= 0; i--) {
-          //   var customer = body[i];
-          //   //console.log(customer);
-          //   if(customer.first_name == first_name && customer.last_name == last_name){
-          //     console.log(customer._id);
-          //     break;
-          //   }
-          // };
-        }
-      })
+//           // for (var i = body.length - 1; i >= 0; i--) {
+//           //   var customer = body[i];
+//           //   //console.log(customer);
+//           //   if(customer.first_name == first_name && customer.last_name == last_name){
+//           //     console.log(customer._id);
+//           //     break;
+//           //   }
+//           // };
+//         }
+//       })
 
-    }
-  })
-  res.send(postData);
-});
+//     }
+//   })
+//   res.send(postData);
+// });
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
