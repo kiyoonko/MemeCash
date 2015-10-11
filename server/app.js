@@ -3,9 +3,6 @@ var bodyParser = require('body-parser');
 var rp = require('request-promise');
 var app = express();
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({
-// 	extended = true;
-// }))
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
@@ -24,7 +21,7 @@ app.post('/user', function (req, res) {
       state: req.body.address.state,
       zip: req.body.address.zip
     }
-  } 
+  };
   
   var url = "http://api.reimaginebanking.com/customers?key=e833c6c363ae8cbcad538f4fb79e6492";
   var options = {
@@ -32,54 +29,65 @@ app.post('/user', function (req, res) {
     body: postData,
     json: true,
     uri: url
-    resolveWithFullResponse: true
   };
-  rp(options).then(function (response){
-      console.log(response);
+
+  rp(options).then(function (createUser){
+      console.log("Create User", createUser);
+      var options = {
+        method: 'get',
+        uri: url
+      }
+      return rp(options);    
+    }).then(function (getAllUsers){
+     getAllUsers = JSON.parse(getAllUsers);
+      var customer = getAllUsers.filter(function(user) {
+        return user.first_name == first_name && user.last_name == last_name;
+      });
+      return customer[0]._id;
+    }).then(function (id){
+      customerId = id;
+      var url = "http://api.reimaginebanking.com/customers/"+customerId+"/accounts?key=e833c6c363ae8cbcad538f4fb79e6492";
+      var postData = {
+        type: "Savings",
+        nickname: "Primary",
+        rewards: 0,
+        balance: 100,
+      }
+      var options = {
+        method: 'post',
+        body: postData,
+        json: true,
+        uri: url
+      };
+      return rp(options);
+    }).then(function(createAccount){
+      console.log("Create Account", createAccount);
+      var accountsUrl = "http://api.reimaginebanking.com/customers/"+customerId+"/accounts?key=e833c6c363ae8cbcad538f4fb79e6492";
+      console.log(accountsUrl);
+      var options = {
+        method: 'get',
+        uri: accountsUrl
+      }
+      return rp(options);
+
+    }).then(function(getAllAccounts){
+      getAllAccounts = JSON.parse(getAllAccounts);
+      console.log(getAllAccounts);
+
+      accountId = getAllAccounts[0]._id;
+      console.log("Created Account", accountId);
+      res.send({
+        customerId: customerId,
+        accountId: accountId
+      })
+    }).catch(function(error){
+      console.log("error", error.message);
+      res.status(404).error("An error occurred");
     });
-//       var options = {
-//         method: 'get',
-//         url: url
-//       }
-//       request(options, function (err, res, body){
-//         if(err){
-//           console.log(err);
-//         }
-//         else{
-//           var parsedBody = JSON.parse(body);
-//           // console.log("body", parsedBody);
-
-//           parsedBody.forEach(function(customer){
-//             //console.log(customer);
-//             //console.log(customer.first_name+" vs. "+first_name);
-//             //console.log(customer.last_name+" vs. "+last_name);
-//             // console.log("This is real");
-//             if(customer.first_name == first_name && customer.last_name == last_name){
-//               // console.log(customer);
-//               console.log(customer.first_name+" "+customer.last_name);
-//               console.log(customer._id);
-//             }
-//           })
-
-//           // for (var i = body.length - 1; i >= 0; i--) {
-//           //   var customer = body[i];
-//           //   //console.log(customer);
-//           //   if(customer.first_name == first_name && customer.last_name == last_name){
-//           //     console.log(customer._id);
-//           //     break;
-//           //   }
-//           // };
-//         }
-//       })
-
-//     }
-//   })
-   res.send(postData);
  });
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
-
   console.log('Example app listening at http://%s:%s', host, port);
 });
