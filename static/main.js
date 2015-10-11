@@ -100,8 +100,43 @@ function start_list(accesstoken) {
 }
 
 
+<<<<<<< HEAD
 
 function open_chat(binderid) {
+=======
+function open_chat(binderid) {
+    var chat_options = {
+        binder_id: binderid,
+        iframe: true,
+        tagid4iframe: "chat_container",
+        iframewidth: "920px",
+        iframeheight: "650px",
+        autostart_meet: true,
+        autostart_note: false,
+        start_chat: function (event) {
+            alert("Chat started session Id: " + event.session_id);
+        },
+        start_meet: function (event) {
+            alert("Meet started session key: " + event.session_key + " session id: " + event.session_id);
+        },
+        end_meet: function (event) {
+            alert("Meet end event");
+        },
+        invite_member: function (event) {
+            alert("Invite member into binder Id: " + event.binder_id);
+        },
+        request_note: function (event) {
+            alert("Note start request");
+        },
+        error: function (event) {
+            alert("Chat error code: " + event.error_code + " error message: " + event.error_message);
+        }
+    };
+    Moxtra.chatView(chat_options);
+}
+
+function start_chat(user) {
+>>>>>>> 86f7661241bc07a5ef695df7e28c276253070a45
     var chat_options = {
         binder_id: binderid,
         iframe: true,
