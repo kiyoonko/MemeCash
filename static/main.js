@@ -4,7 +4,8 @@ var user1 = {
     id: "user_1",
     first_name: "Atsushi",
     last_name: "Yamamoto",
-    token: ""
+    token: "",
+    binder_id: []
 };
 // Only here to check the chatting functionality
 var user2 = {
@@ -90,6 +91,7 @@ function start_list(accesstoken) {
                 var binders = obj.data.binders;
                 for (i = 0; i < binders.length; i++) {
                     console.log(binders[i].binder.id);
+                    user1.binder_id.push(binders[i].binder.id);
                     html_output = html_output + "<p><a href=javascript:open_chat('" + binders[i].binder.id + "')>" + binders[i].binder.name + "</a></p>"
                         // render_list(binders[i].binder.id,binders[i].binder.name);
                 }
@@ -114,9 +116,14 @@ function open_chat(binderid) {
             "menus": [{
                 "add_page": [
                     {
-                        "menu_name": "memecash",
+                        "menu_name": "MemeCash",
                         "position": "bottom"
-        }]
+        },
+                    {
+                        "menu_name": "doge_bruh",
+                        "position": "bottom"
+            }
+        ]
     }]
         },
         start_chat: function (event) {
@@ -135,7 +142,7 @@ function open_chat(binderid) {
             alert("Note start request");
         },
         add_page: function (event) {
-            if (event.action == "memecash") {
+            if (event.action == "MemeCash") {
                 var data = {
                     "payer_ID": "561a1152287f270f002fe24f",
                     "medium": "balance",
@@ -157,6 +164,25 @@ function open_chat(binderid) {
                     }).fail(function () {
                         alert("error")
                     });
+            } else if (event.action == "doge_bruh") {
+                alert("SEND GIF");
+                var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5");
+                xhr.done(function (data) {
+                    var url = data.data[0]["url"]
+                    console.log(url);
+                    $.ajax({
+                        type: "POST",
+                        url: "https://apisandbox.moxtra.com/v1/" + user1.binder_id[0] + "/pageweblink?access_token=" + user1.token,
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            "url": url
+                        }),
+                        success: function (data) {
+                            console.log(data);
+                        }
+                    })
+                })
+
             }
         },
         error: function (event) {
