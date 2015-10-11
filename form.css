@@ -1,0 +1,38 @@
+h1 {
+  font-family: 'Open Sans';
+	font-size: 36px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+  margin:0 0 40px;
+
+}
+
+body {
+  background-image: url("http://lovelace-media.imgix.net/uploads/25/378bc2a0-4376-0133-9d86-0af7184f89fb.gif?");
+}
+
+.field-wrap {
+  font-family: 'Open Sans';
+	font-size: 18px;
+	font-style: normal;
+	font-variant: normal;
+  padding-bottom: 10px;
+
+}
+
+.signup {
+  float: left;
+  padding-right: 50px;
+  padding-left: 200px;
+  color: #ffffff;
+
+}
+
+.login {
+  float: middle;
+  padding-right: 30px;
+  padding-left: 50px;
+  color: #ffffff;
+}
