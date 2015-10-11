@@ -52,22 +52,22 @@ app.post('/user', function (req, res) {
           // console.log("body", parsedBody);
 
           parsedBody.forEach(function(customer){
-            // console.log(customer);
-            // console.log(customer.first_name+" vs. "+first_name);
-            // console.log(customer.last_name+" vs. "+last_name);
+            console.log(customer);
+            console.log(customer.first_name+" vs. "+first_name);
+            console.log(customer.last_name+" vs. "+last_name);
             if(customer.first_name == first_name && customer.last_name == last_name){
               console.log(customer._id);
             }
           })
 
-          // for (var i = body.length - 1; i >= 0; i--) {
-          //   var customer = body[i];
-          //   console.log(customer);
-          //   if(customer.first_name == first_name && customer.last_name == last_name){
-          //     console.log(customer._id);
-          //     break;
-          //   }
-          // };
+          for (var i = body.length - 1; i >= 0; i--) {
+            var customer = body[i];
+            console.log(customer);
+            if(customer.first_name == first_name && customer.last_name == last_name){
+              console.log(customer._id);
+              break;
+            }
+          };
         }
       })
 
