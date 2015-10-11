@@ -31,8 +31,9 @@ app.post('/user', function (req, res) {
     method: 'post',
     body: postData,
     json: true,
-    url: url
-  }
+    uri: url
+    resolveWithFullResponse: true
+  };
   rp(options).then(function (response){
       console.log(response);
     });
