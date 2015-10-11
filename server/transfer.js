@@ -4,7 +4,7 @@ var rp = require('request-promise');
 var app = express();
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({
-// 	extended = true;
+//     extended = true;
 // }))
 
 app.get('/', function (req, res) {
@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
 
 app.post('/user', function (req, res) {
   var payer_ID = req.body.payer_ID;
-  var postData = { 
+  var postData = {
     medium: req.body.medium,
     payee_id: req.body.payee_ID,
     amount: req.body.amount
@@ -44,7 +44,7 @@ app.post('/user', function (req, res) {
   });
 });
 
-var server = app.listen(3000, function () {
+var server = app.listen(4000, function () {
   var host = server.address().address;
   var port = server.address().port;
 

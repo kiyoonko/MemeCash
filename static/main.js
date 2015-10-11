@@ -110,6 +110,15 @@ function open_chat(binderid) {
         iframeheight: "400px",
         autostart_meet: true,
         autostart_note: false,
+        extension: {
+            "menus": [{
+                "add_page": [
+                    {
+                        "menu_name": "memecash",
+                        "position": "bottom"
+        }]
+    }]
+        },
         start_chat: function (event) {
             alert("Chat started session Id: " + event.session_id);
         },
@@ -125,8 +134,20 @@ function open_chat(binderid) {
         request_note: function (event) {
             alert("Note start request");
         },
+        add_page: function (event) {
+            if (event.action == "memecash") {
+                alert("Clicked on My CMS for Binder Id: " + event.binder_id);
+            }
+        },
         error: function (event) {
             alert("Chat error code: " + event.error_code + " error message: " + event.error_message);
+//            $.ajax({
+//                type: "POST",
+//                url: "http://localhost:4000",
+//                success: function (data) {
+//                    console.log(data);
+//                }
+//            })
         }
     };
     Moxtra.chat(chat_options);
