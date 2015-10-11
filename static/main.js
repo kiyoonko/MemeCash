@@ -137,9 +137,14 @@ function open_timeline() {
         cancel_note: function (event) {
             alert("Note cancelled");
         },
+        add_page: function (event) {
+            if (event.action == "Do MemeCash") {
+                alert("Clicked on My CMS for Binder Id: " + event.binder_id);
+            }
+        },
         error: function (event) {
             alert("Timeline error code: " + event.error_code + " error message: " + event.error_message);
         }
     };
     Moxtra.timeline(options);
-}
+};
