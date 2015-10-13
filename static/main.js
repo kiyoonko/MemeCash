@@ -164,6 +164,7 @@ function open_chat(binderid) {
                     }).fail(function () {
                         alert("error")
                     });
+
             } else if (event.action == "doge_bruh") {
                 alert("SEND GIF");
                 var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5");
